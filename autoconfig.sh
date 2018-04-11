@@ -88,6 +88,10 @@ dnf_install ./google-chrome-stable_current_x86_64.rpm
 #https://www.teamviewer.com/en/download/linux/
 #https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
 
+# = remote
+dnf_install tigervnc
+dnf_install freerdp
+
 # dnf_install vlc # hung...
 dnf_install gimp
 
