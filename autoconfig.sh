@@ -12,21 +12,22 @@ if [ ! -f $RELCFG ]; then
     exit
 fi
 
-if ! grep "Fedora release 27 (Twenty Seven)" $RELCFG > /dev/null; then
+if ! grep -E "Fedora release 2[0-9]" $RELCFG > /dev/null; then
     echo -e "this config script is only for Fedora and CentOS...\nexit..."
     exit
 fi
 
 if ! vim --version 2>/dev/null | grep -q +python3; then
-    echo run this script, then install vim by https://github.com/shuhm-gh/oh-my-vim.git, gnome of fedora 27 will not work
+    echo run this script, then install vim by https://github.com/shuhm-gh/oh-my-vim.git, gnome of fedora will not work
     echo so, install vim first
     echo exit
     exit
 fi
 
+LOG=`date "+%Y-%m-%d_%H:%M:%S"`.log
 function dnf_install {
     echo `date "+%Y-%m-%d %H:%M:%S"` dnf install -y $*
-    sudo dnf install -y $* > /dev/null 2>&1
+    sudo dnf install -y $* > /dev/null 2>>$LOG
 }
 
 
@@ -53,7 +54,9 @@ dnf_install gcc gcc-c++ kernel-{headers,devel}-`uname -r`
 
 # === virtualbox
 # aria2c https://download.virtualbox.org/virtualbox/5.2.8/VirtualBox-5.2-5.2.8_121009_fedora26-1.x86_64.rpm
-dnf_install ./VirtualBox-5.2-5.2.8_121009_fedora26-1.x86_64.rpm
+# /sbin/vboxconfig  # fedora 28, "Cannot generate ORC metadata for CONFIG_UNWINDER_ORC=y, please install libelf-dev, libelf-devel or elfutils-libelf-devel".  Stop.
+dnf_install elfutils-libelf-devel
+dnf_install ./VirtualBox-5.*.x86_64.rpm
 #put installation of VirtualBox_Extension_Pack at the end because interactive
 sudo usermod -a -G vboxusers kylin
 
@@ -68,11 +71,12 @@ dnf_install npm
 # sudo oh-my-vim/install # vim
 
 # = pomodoro
-#dnf_install gnome-shell-extension-pomodoro
+dnf_install gnome-shell-extension-pomodoro
 
 dnf_install aria2
 dnf_install axel
 dnf_install tmux
+dnf_install unrar
 
 dnf_install python3-shadowsocks
 # sudo sslocal -c /etc/shadowsocks-jdb.json -d start
@@ -83,6 +87,7 @@ dnf_install ack
 # = chrome
 #curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 dnf_install ./google-chrome-stable_current_x86_64.rpm
+dnf_install chromium
 
 # = teamviewer
 #https://www.teamviewer.com/en/download/linux/
@@ -149,7 +154,7 @@ sed -i '$aexport JAVA_HOME=/opt/jdk-10\nexport PATH=\$JAVA_HOME/bin:$PATH' /etc/
 
 # === vbox-extpack
 # aria2c https://download.virtualbox.org/virtualbox/5.2.8/Oracle_VM_VirtualBox_Extension_Pack-5.2.8.vbox-extpack
-sudo VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-5.2.8.vbox-extpack
+sudo VBoxManage extpack install ./Oracle_VM_VirtualBox_Extension_Pack-5.*.vbox-extpack
 echo -e "\nenjoy"
 
 exit
