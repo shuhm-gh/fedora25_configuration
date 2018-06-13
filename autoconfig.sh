@@ -130,6 +130,8 @@ dnf_install nload
 dnf_install iftop
 dnf_install sysstat
 
+dnf_install plantuml
+
 dnf_install wireshark-gnome
 sudo usermod -aG wireshark kylin
 # = dbeaver
