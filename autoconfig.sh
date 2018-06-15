@@ -131,6 +131,7 @@ dnf_install iftop
 dnf_install sysstat
 
 dnf_install plantuml
+dnf_install python3-ipython
 
 dnf_install wireshark-gnome
 sudo usermod -aG wireshark kylin
