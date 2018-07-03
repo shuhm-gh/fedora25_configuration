@@ -73,6 +73,8 @@ dnf_install npm
 # = pomodoro
 dnf_install gnome-shell-extension-pomodoro
 
+dnf_install qterminal
+dnf_install gnome-terminal-nautilus
 dnf_install aria2
 dnf_install axel
 dnf_install tmux
@@ -132,6 +134,7 @@ dnf_install sysstat
 
 dnf_install plantuml
 dnf_install python3-ipython
+dnf_install python3-notebook
 
 dnf_install wireshark-gnome
 sudo usermod -aG wireshark kylin
