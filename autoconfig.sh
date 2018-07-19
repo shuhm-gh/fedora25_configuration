@@ -145,6 +145,8 @@ if sudo tar zxf ./dbeaver-ce-*.tar.gz -C /opt/; then
     sudo ln -sf /opt/dbeaver/dbeaver /usr/local/bin/dbeaver
     sudo chmod a+x /opt/dbeaver/dbeaver
 fi
+
+dnf_install maven
 # vs code
 #aria2c https://code.visualstudio.com/docs/?dv=linux64_rpm
 dnf_install ./code-*.rpm
